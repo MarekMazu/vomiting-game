@@ -145,13 +145,17 @@ export class GameEngineService implements OnDestroy {
             p.velocity.add(gravity);
             p.mesh.position.add(p.velocity);
 
-            // Collision with targets
+            // Collision with targets - increased radius for easier scoring
             for (const target of this.targets) {
                 const distance = p.mesh.position.distanceTo(target.position);
-                if (distance < 0.8) {
+                if (distance < 1.2) { // Increased from 0.8 to 1.2 for easier hits
                     // Hit! Turn target green
                     (target.material as THREE.MeshStandardMaterial).color.setHex(0x00ff00);
-                    this.score++;
+
+                    // Update score in Angular zone
+                    this.ngZone.run(() => {
+                        this.score++;
+                    });
 
                     // Create splat on target
                     this.createSplat(p.mesh.position.clone(), target);

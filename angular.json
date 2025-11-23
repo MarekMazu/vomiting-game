@@ -35,6 +35,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/vomiting-game/",
               "budgets": [
                 {
                   "type": "initial",
